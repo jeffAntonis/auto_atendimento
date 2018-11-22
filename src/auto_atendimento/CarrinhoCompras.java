@@ -6,7 +6,7 @@ public class CarrinhoCompras extends Lista{
 	public void adicionar(Produto produto, int qtd){
 		
 		add(qtd, produto);		
-		this.total += produto.getValor();
+		this.total += produto.getValor() * qtd;
 		System.out.println("Produto adicionado ao carrinho");
 	}
 	

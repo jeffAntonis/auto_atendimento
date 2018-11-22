@@ -6,6 +6,7 @@ public class Principal {
 	public static Lista lista = new Lista();
 	public static CarrinhoCompras carrinho = new CarrinhoCompras();
 	public static Scanner scanner = new Scanner(System.in);
+	public static PedidosRealizados pedidosRealizados = new PedidosRealizados();
 	
 	//FUNÇÃO MAIN
 	public static void main(String[] args) {
@@ -22,6 +23,7 @@ public class Principal {
 			System.out.println("4.Visualizar o carrinho");
 			System.out.println("5.Excluir produto do carrinho");
 			System.out.println("6.Finalizar compra");
+			System.out.println("7.Visualizar pedido");
 			System.out.println("10.Sair");
 			
 			opcao = Integer.parseInt(scanner.next());
@@ -43,6 +45,24 @@ public class Principal {
 				case 5:
 					excluirProdutoCarrinho();
 					break;
+				case 6:
+					if(carrinho.tamanho > 0) {
+						System.out.println("Finalizando pedido...");
+						System.out.println("Pedido Finalizado");
+						int codigoPedido = pedidosRealizados.salvarPedido(carrinho);
+						System.out.println("O código do seu peido é: " + codigoPedido);
+						carrinho.clear();
+					} else {
+						System.out.println("Não há produtos no carinho.");
+					}
+					break;
+					
+					
+				case 7:
+					System.out.println("Qual o numero do seu pedido?");
+					pedidosRealizados.listarPedido(Integer.parseInt(scanner.next()));
+					break;
+					
 				case 10:
 					System.out.println("Saindo.....");
 					break;
@@ -56,7 +76,7 @@ public class Principal {
 		System.exit(1);
 		
 	}
-	
+
 	//EXCLUIR PRODUTO DO CARRINHO
 	private static void excluirProdutoCarrinho() {
 		System.out.println("Insira o código do produto que deseja excluir");
@@ -148,8 +168,8 @@ public class Principal {
 	
 	//LIMPAR TELA
 	public static void limparTela() {
-		for(int i = 0; i < 8; ++i) {  
-		   System.out.println();
+		for (int i = 0; i < 25; i++) {
+			System.out.println("");	
 		}
 	}
 }
