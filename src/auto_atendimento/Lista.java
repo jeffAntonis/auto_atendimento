@@ -1,5 +1,7 @@
 package auto_atendimento;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -7,7 +9,6 @@ import java.util.ListIterator;
 
 public class Lista implements List<Produto>{
 	public int tamanho = 0;
-	private double valorTotal = 0;
 	private Produto elementos[];
 	private int quantidade[] = new int[100];
 	
@@ -22,8 +23,6 @@ public class Lista implements List<Produto>{
 		this.elementos[this.tamanho] = produto;	
 		this.tamanho++;
 		
-		this.valorTotal += produto.getValor();
-		
 		return true;
 	}
 
@@ -33,8 +32,6 @@ public class Lista implements List<Produto>{
 		this.elementos[this.tamanho] = produto;
 		this.quantidade[this.tamanho] = qtd;	
 		this.tamanho++;
-		
-		this.valorTotal += produto.getValor();
 	}
 
 	@Override
@@ -52,7 +49,7 @@ public class Lista implements List<Produto>{
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-		
+		this.elementos = new Produto[100];
 	}
 
 	@Override
@@ -72,6 +69,11 @@ public class Lista implements List<Produto>{
 		// TODO Auto-generated method stub
 		return this.elementos[index];
 	}
+	
+	public int getQuantidade(int index) {
+		// TODO Auto-generated method stub
+		return this.quantidade[index];
+	}
 
 	@Override
 	public int indexOf(Object o) {
@@ -82,7 +84,11 @@ public class Lista implements List<Produto>{
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return false;
+		if(this.tamanho == 0){
+			return true;
+		} else{
+			return false;
+		}
 	}
 
 	@Override
@@ -111,13 +117,30 @@ public class Lista implements List<Produto>{
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean achou = false;
+		
+		Produto auxProduto[] = new Produto[100];
+		int auxQuantidade[] = new int[100];
+		int index = 0;
+		
+		//POPULANDO OS ARRAYS
+		for(int i = 0; i < this.tamanho; i++){
+			if(o.equals(this.elementos[i])){
+				this.tamanho -= 1;
+				achou = true;
+				
+				for(int j = i ; j<this.tamanho ; j++){
+					this.elementos[j] = this.elementos[j+1];
+					this.quantidade[j] = this.quantidade[j+1];
+				}    
+			} 
+		}
+		
+		return achou;
 	}
 
 	@Override
-	public Produto remove(int index) {
-		// TODO Auto-generated method stub
+	public Produto remove(int index) {	
 		return null;
 	}
 
@@ -142,7 +165,7 @@ public class Lista implements List<Produto>{
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.tamanho;
 	}
 
 	@Override

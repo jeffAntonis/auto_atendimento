@@ -4,9 +4,10 @@ import java.util.Scanner;
 
 public class Principal {
 	public static Lista lista = new Lista();
-	public static Lista carrinho = new Lista();
+	public static CarrinhoCompras carrinho = new CarrinhoCompras();
 	public static Scanner scanner = new Scanner(System.in);
-
+	
+	//FUNÇÃO MAIN
 	public static void main(String[] args) {
 
 		int opcao = 0;
@@ -21,6 +22,7 @@ public class Principal {
 			System.out.println("4.Visualizar o carrinho");
 			System.out.println("5.Excluir produto do carrinho");
 			System.out.println("6.Finalizar compra");
+			System.out.println("10.Sair");
 			
 			opcao = Integer.parseInt(scanner.next());
 			
@@ -38,6 +40,12 @@ public class Principal {
 				case 4:
 					visualizarCarrinho();
 					break;
+				case 5:
+					excluirProdutoCarrinho();
+					break;
+				case 10:
+					System.out.println("Saindo.....");
+					break;
 				default:
 					System.out.println("Opção inválida!");
 					break;
@@ -49,26 +57,62 @@ public class Principal {
 		
 	}
 	
+	//EXCLUIR PRODUTO DO CARRINHO
+	private static void excluirProdutoCarrinho() {
+		System.out.println("Insira o código do produto que deseja excluir");
+		int codigoProduto = Integer.parseInt(scanner.next());
+		
+		//VERIFICAÇÃO
+		if(carrinho.remove(carrinho.get(codigoProduto-1))){
+			System.out.println("Excluído com sucesso!");
+		} else{
+			System.out.println("Erro ao excluí do carrinho!");
+		}
+	}
+	
+	//VISUALIZAR CARRINHO DE COMPRAS
 	private static void visualizarCarrinho() {
 		
+		limparTela();
 		
+		String formato = " %d        | %-15s                 |  %d             %n";
+		System.out.format("----------+--------------CARRINHO-----------+------------------%n");
+		System.out.format("----------+---------------------------------+------------------%n");
+		System.out.format("  Código  | Produto                         |  Qtd             %n");
+		System.out.format("----------+---------------------------------+------------------%n");
 		
+		//PERCORRENDO O ARRAY	
+		for(int i=0 ; i<carrinho.tamanho ; i++) {
+			System.out.format(formato, i+1, carrinho.get(i).getNome(), carrinho.getQuantidade(i));
+		}
+		
+		if(carrinho.tamanho == 0){
+			System.out.format("%-15s", "              NENHUM REGISTRO ENCONTRADO                   \n");
+		} else{
+			System.out.format("----------+---------------------------------+------------------%n");
+			System.out.format(" VALOR-TOTAL %f \n", carrinho.getValorToal());
+		}
+			
+		
+		System.out.format("----------+---------------------------------+------------------%n");
 	}
-
+	
+	//ADICIONAR PRODUTO AO CARRINHO
 	private static void adicionarProdutoCarrinho() {
 		System.out.println("Digite o código do produto e em seguida a quantidade");
 		int codigoProduto = Integer.parseInt(scanner.next());
 		int qtdProduto = Integer.parseInt(scanner.next());
-		
-		carrinho.add(qtdProduto, lista.get(codigoProduto--));
+				
+		carrinho.adicionar(lista.get(codigoProduto-1), qtdProduto);
 	}
-
+	
+	//CADASTRAR PRODUTO
 	public static void cadastrarProduto() {
 		
-		System.out.println("Digite a senha:");
-		
+		System.out.println("Digite a senha:");		
 		String senha = scanner.next().toString();
 		
+		//VERIFICA SE O USUARIO INSERIU A SENHA DE ADMINISTRADOR
 		if(Integer.parseInt(senha) == 123) {
 			System.out.println("Insira o nome do produto e em seguida o valor");		
 			String nome = scanner.next().toString();
@@ -83,6 +127,7 @@ public class Principal {
 		}
 	}
 	
+	//LISTAR PRODUTOS CADASTRADOS
 	public static void listarProdutos() {
 		
 		limparTela();
@@ -94,18 +139,17 @@ public class Principal {
 		System.out.format("----------+---------------------------------+------------------%n");
 		
 		//PERCORRENDO O ARRAY	
-		for(int i=0 ; i<lista.tamanho ; i++) {
-			
+		for(int i=0 ; i<lista.tamanho ; i++) {			
 			System.out.format(formato, i+1, lista.get(i).getNome(), lista.get(i).getValor());
 		}
 		
 		System.out.format("----------+---------------------------------+------------------%n");
 	}
 	
+	//LIMPAR TELA
 	public static void limparTela() {
 		for(int i = 0; i < 8; ++i) {  
 		   System.out.println();
 		}
 	}
-
 }
