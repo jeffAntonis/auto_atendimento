@@ -13,6 +13,14 @@ public class Principal {
 
 		int opcao = 0;
 		
+		//CADASTRO AUTOMÁTICO PRA FACILITAR O TRABAHLO DO PROFESSOR
+		lista.add(new Produto("Skate", 100000.00));
+		lista.add(new Produto("BMX", 1000.00));
+		lista.add(new Produto("Carroça", 1000.00));
+		lista.add(new Produto("CarroPoular", 100.00));
+		lista.add(new Produto("Ferrari", 10.00));
+		
+		
 		do {
 			
 			System.out.println("Escolha uma opção! \n");

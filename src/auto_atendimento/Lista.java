@@ -119,10 +119,6 @@ public class Lista implements List<Produto>{
 	public boolean remove(Object o) {
 		boolean achou = false;
 		
-		Produto auxProduto[] = new Produto[100];
-		int auxQuantidade[] = new int[100];
-		int index = 0;
-		
 		//POPULANDO OS ARRAYS
 		for(int i = 0; i < this.tamanho; i++){
 			if(o.equals(this.elementos[i])){
